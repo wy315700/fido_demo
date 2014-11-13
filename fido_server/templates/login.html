@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+{% block morecss %} 
+<style type="text/css">
+  .form-signin input[name="username"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[name="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+{% load staticfiles %}
+	<link href="{% static "bootstrap/css/signin.css" %}" rel="stylesheet">
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block right-header %}
+	<div class="navbar-collapse collapse">
+        <div class="navbar-right">
+			<a class="navbar-brand">常回小站看看 :)</a>
+		</div>
+    </div><!--/.navbar-collapse -->
+{% endblock %}
+{% block content %}
+<div class="container location-center">
+	<form class="form-signin" role="form" method="post" action = "/index/">
+	<h2 class="form-signin-heading">请登录...</h2>
+	{% if fails %}
+		<p class="error-sign">用户名或密码错误，请重新登录！</p>
+	{% endif %}
+	{% csrf_token %}
+			{{loginform.username}}
+			{{loginform.password}}
+		<label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+		<button type="submit" class="btn btn-lg btn-primary btn-block">登&nbsp;&nbsp;录</button>
+	</form>
+</div>
+{% endblock %}
