@@ -58,6 +58,14 @@ class supportCommentRelation(models.Model):
     commentId = models.ForeignKey(Comment, verbose_name = "评论Id")
     userId = models.ForeignKey(User, verbose_name = "用户Id")
 
+class FacetIDs (models.Model):
+    id = models.AutoField(primary_key=True)
+    facetId = models.CharField(max_length=100, verbose_name="facetId")
+    class Meta:
+        verbose_name_plural = 'facetId管理'
+        verbose_name = 'facetId'
+
+
 
 
 
