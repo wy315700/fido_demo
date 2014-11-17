@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+{% block morecss %} 
+{% load staticfiles %}
+<link href="{% static "bootstrap/css/signin.css" %}" rel="stylesheet">
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block right-header %}
+<div class="navbar-collapse collapse">
+    <div class="navbar-right">
+        <a class="navbar-brand">欢迎你加入本站！</a>
+    </div><!--/.navbar-right -->
+</div><!--/.navbar-collapse -->
+{% endblock %}
+{% block content %}
+<div class="container leave-top">
+<form action = "/regist/" method = "post" class="form-signin" role="form">
+ <h2 class="form-signin-heading">欢迎光临小站</h2>
+{% csrf_token %}
+    <div>
+        {{regForm.username.errors}}
+        <label>用户名：</label>
+        {{regForm.username}}
+    </div>
+    <div>
+        {{regForm.last_name.errors}}
+        <label>姓氏：</label>
+        {{regForm.last_name}}
+    </div>
+    <div>
+        {{regForm.first_name.errors}}
+        <label>名字：</label>
+        {{regForm.first_name}}
+    </div>
+    <div>
+        {{regForm.password.errors}}
+        <label>密码：</label>
+        {{regForm.password}}
+    </div>
+    <div>
+        {{regForm.confirmPassword.errors}}
+        <label>确认密码：</label>
+        {{regForm.confirmPassword}}
+    </div>
+    <div>
+        {{regForm.email.errors}}
+        <label>邮箱：</label>
+        {{regForm.email}}
+    </div>
+	<br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">注&nbsp;&nbsp;&nbsp;册</button>
+</form>
+</div>
+{% endblock %}
