@@ -34,60 +34,20 @@
         </div><!--/sidebar-->
 {% endblock %}
 {% block content %}
-    <h1 style="text-align:center">用户信息</h1>
+    <h1 style="text-align:center">RP facetID 信息</h1>
     <div class="list-group">
    <a href="#" class="list-group-item active">
-      <h4 class="list-group-item-heading">
-         用户基本信息
+      <h4 class="list-group-item-heading" style="text-align:center">
+         该RP的所有合法FaceIDs
       </h4>
    </a>
+   {% for facetId in facetIds %}
    <a href="#" class="list-group-item">
       <h4 class="list-group-item-heading">
-         真实姓名：{{userInfo.last_name}} {{userInfo.first_name}}
-      </h4>
-      <p class="list-group-item-text">
-         参加小站组织的线下活动时，尽量使用真实姓名
-      </p>
-   </a>
-   <a href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">
-         用户昵称：{{userInfo.username}}
-      </h4>
-      <p class="list-group-item-text">
-         用户线上评论或发表文章将显示用户昵称
-      </p>
-   </a>
-    <a href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">
-         用户邮箱：{{userInfo.email}}
-      </h4>
-      <p class="list-group-item-text">
-         网站通过用户邮箱对用户反映的信息进行反馈
-      </p>
-   </a>
-</div>
-<div class="list-group">
-   <a href="#" class="list-group-item active">
-      <h4 class="list-group-item-heading">
-         用户登录和注册信息
+         {{ forloop.counter }}：{{facetId.facetId}}
       </h4>
    </a>
-   <a href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">
-         上次登录时间：{{userInfo.last_login}}
-      </h4>
-      <p class="list-group-item-text">
-         您上次登录小站的具体时间
-      </p>
-   </a>
-   <a href="#" class="list-group-item">
-      <h4 class="list-group-item-heading">
-          加入时间：{{userInfo.date_joined}}
-      </h4>
-      <p class="list-group-item-text">
-          您注册成为小站成员的具体时间
-      </p>
-   </a>
+   {% endfor %}
 </div>
 
 {% endblock %}

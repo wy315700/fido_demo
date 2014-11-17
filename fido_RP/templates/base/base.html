@@ -29,8 +29,10 @@
           <a class="navbar-brand" href="#">fido测试RP</a>
 		  <ul class="nav navbar-nav">
             <li class="active"><a href="/index/">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            {% if request.user.id %}
+            <li><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
+            {% endif %}
+            <li><a href="/facetid/">FacetIDs</a></li>
           </ul>
         </div><!--/.navbar-header -->
 		{% block right-header %}

@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from forms.userForms import LoginForm, RegistForm
 from forms.articleForms import ArticleForm, CommentForm
 from django.contrib.auth.models import User, Group
-from articles.models import Essay, Tag, tagEssayRelation, Comment, supportCommentRelation
+from articles.models import Essay, Tag, tagEssayRelation, Comment, supportCommentRelation, FacetIDs
 from django.core.exceptions import ObjectDoesNotExist
 import time
 
@@ -193,6 +193,10 @@ def showArticle(request):
 def getUser(request):
     userInfo = User.objects.filter(id = request.GET.get('userId'))[0]
     return render_to_response('userInfo.html', locals())
+
+def getFaceIdList(request):
+    facetIds = FacetIDs.objects.all();
+    return render_to_response('facetId.html', locals())
 
 def delComment(request):
     Comment.objects.filter(id = request.GET.get('commentId')).delete()

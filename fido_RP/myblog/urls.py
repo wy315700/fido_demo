@@ -18,5 +18,6 @@ urlpatterns = patterns('',
     url(r'^delarticle/', 'articles.views.delArticle'),
     url(r'^support/', 'articles.views.showSupport'),
     url(r'^editarticle/', 'articles.views.editActicle'),
+    url(r'^facetid/', 'articles.views.getFaceIdList'),
     url(r'^admin/', include(admin.site.urls)),
 )
