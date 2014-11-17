@@ -1,9 +1,92 @@
 {% extends "base/base.html" %}
+{% block sidebar %}
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas leave-top" id="sidebar" role="navigation">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          </div><!--sidebar-module-inset-->
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">March 2014</a></li>
+              <li><a href="#">February 2014</a></li>
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+              <li><a href="#">September 2013</a></li>
+              <li><a href="#">August 2013</a></li>
+              <li><a href="#">July 2013</a></li>
+              <li><a href="#">June 2013</a></li>
+              <li><a href="#">May 2013</a></li>
+              <li><a href="#">April 2013</a></li>
+            </ol>
+          </div><!--sidebar-module-->
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div><!--sidebar-module-->
+        </div><!--/sidebar-->
+{% endblock %}
 {% block content %}
-<h1>用户信息</h1>
-<p>真实姓名： {{userInfo.last_name}} {{userInfo.first_name}}</p>
-<p>用户昵称：{{userInfo.username}}</p>
-<p>用户邮箱：{{userInfo.email}}</p>
-<p>上次登录时间：{{userInfo.last_login}}</p>
-<p>加入时间：{{userInfo.date_joined}}
+    <h1>用户信息</h1>
+    <div class="list-group">
+   <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">
+         用户基本信息
+      </h4>
+   </a>
+   <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">
+         真实姓名：{{userInfo.last_name}} {{userInfo.first_name}}
+      </h4>
+      <p class="list-group-item-text">
+         参加小站组织的线下活动时，尽量使用真实姓名
+      </p>
+   </a>
+   <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">
+         用户昵称：{{userInfo.username}}
+      </h4>
+      <p class="list-group-item-text">
+         用户线上评论或发表文章将显示用户昵称
+      </p>
+   </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">
+         用户邮箱：{{userInfo.email}}
+      </h4>
+      <p class="list-group-item-text">
+         网站通过用户邮箱对用户反映的信息进行反馈
+      </p>
+   </a>
+</div>
+<div class="list-group">
+   <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">
+         用户登录和注册信息
+      </h4>
+   </a>
+   <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">
+         上次登录时间：{{userInfo.last_login}}
+      </h4>
+      <p class="list-group-item-text">
+         您上次登录小站的具体时间
+      </p>
+   </a>
+   <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">
+          加入时间：{{userInfo.date_joined}}
+      </h4>
+      <p class="list-group-item-text">
+          您注册成为小站成员的具体时间
+      </p>
+   </a>
+</div>
+
 {% endblock %}
