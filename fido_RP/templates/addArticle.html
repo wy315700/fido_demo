@@ -87,7 +87,11 @@
             {{articleForm.content}}
         </div>
         <br/>
+        {% if perms.article.add_essay %}
         <input type = "submit" class="ibtn btn btn-success" value="发布">
+        {% else %}
+        <input type = "submit" class="ibtn btn btn-success" disabled="disabled" value="发布">
+        {% endif %}
         <input type = "reset" class="ibtn btn btn-info" value="清空">
     </form>
   </div>

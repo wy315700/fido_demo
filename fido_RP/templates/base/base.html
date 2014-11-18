@@ -28,13 +28,15 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">fido测试RP</a>
+          {% block left-header %}
 		  <ul class="nav navbar-nav">
             <li class="active"><a href="/index/">Home</a></li>
             {% if request.user.id %}
-            <li><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
+            <li class="inactive"><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
             {% endif %}
-            <li><a href="/facetid/">FacetIDs</a></li>
+            <li class="inactive"><a href="/facetid/">FacetIDs</a></li>
           </ul>
+        {% endblock %}
         </div><!--/.navbar-header -->
 		{% block right-header %}
         <div class="navbar-collapse collapse">
@@ -76,7 +78,11 @@
             依赖方即RP主要负责根据用户需求触发fido认证服务器形成身份认证或绑定请求，
             并供fido认证客户端查询支持的用户代理。</p>
         {% if request.user.is_authenticated %}
-            <p><a href = "/addarticle/?edit=0" class="btn btn-primary btn-lg" role="button">发篇文章 &raquo;</a></p>
+            {% if perms.article.add_essay %}
+                <p><a href = "/addarticle/?edit=0" class="btn btn-primary btn-lg" role="button">发篇文章 &raquo;</a></p>
+            {% else %}
+                <p><a href = "#" class="btn btn-primary btn-lg" role="button" disabled="disabled">暂无发表文章权限 -_-</a></p>
+            {% endif %}
         {% else %}
             <p><a href = "/regist/" class="btn btn-primary btn-lg" role="button">加入fido &raquo;</a></p>
         {% endif %}

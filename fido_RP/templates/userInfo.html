@@ -1,4 +1,13 @@
 {% extends "base/base.html" %}
+{% block left-header %}
+    <ul class="nav navbar-nav">
+        <li class="inactive"><a href="/index/">Home</a></li>
+        {% if request.user.id %}
+            <li class="active"><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
+        {% endif %}
+        <li class="inactive"><a href="/facetid/">FacetIDs</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
     <h1 style="text-align:center">用户信息</h1>
     <div class="list-group">

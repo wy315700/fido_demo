@@ -1,5 +1,7 @@
 {% extends "base/base.html" %}
+{% block header %}{% endblock %}
 {% block content %}
+    <div class="leave-top">
 <h6 class="blog-post-title" style="text-align: center">{{essay.subject}}</h6>
     <br/>
     {% autoescape off %}
@@ -40,7 +42,7 @@
 {% endfor %}
 <h3>我&nbsp;的&nbsp;看&nbsp;法 <span class="label label-success">speak!</span></h3>
 <br/>
-{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated and perms.article.add_commit %}
 <form action = "" method = "post">
 {% csrf_token %}
 	<div>
@@ -63,11 +65,19 @@
     </div>
 </form>
     {% else %}
-    <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>先让我们认识你！</strong>&nbsp;&nbsp;&nbsp;请首先登录，再进行评论！
-    </div>
+        {% if request.user.is_authenticated %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>抱歉！</strong>&nbsp;&nbsp;&nbsp;您暂时未取得评论权限，请联系管理员！
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>先让我们认识你！</strong>&nbsp;&nbsp;&nbsp;请首先登录，再进行评论！
+            </div>
+        {% endif %}
     {% endif %}
+    </div>
 {% endblock %}
 {% block on_ready %}
     $('a.btn[id]').bind("click",function(){

@@ -197,11 +197,12 @@ def showArticle(request):
 
 def getUser(request):
     userInfo = User.objects.filter(id = request.GET.get('userId'))[0]
-    return render_to_response('userInfo.html', locals())
+    return render_to_response('userInfo.html', locals(),context_instance = RequestContext(request))
 
 def getFaceIdList(request):
-    facetIds = FacetIDs.objects.all();
-    return render_to_response('facetId.html', locals())
+    facetIds = FacetIDs.objects.all()
+    loginform = LoginForm()
+    return render_to_response('facetId.html', locals(),context_instance = RequestContext(request))
 
 def delComment(request):
     Comment.objects.filter(id = request.GET.get('commentId')).delete()
@@ -233,7 +234,7 @@ def showSupport(request):
     return HttpResponse(supportNum)
 
 def getTrustedApps(request):
-    facetIds = FacetIDs.objects.all();
+    facetIds = FacetIDs.objects.all()
     version = {
         "mj" : 1,
         "mn" : 0,
