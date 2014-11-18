@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="Django default" uuid="4e50871e-b112-4c4c-a757-221e0cbe21a6">
       <driver-ref>mysql</driver-ref>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://127.0.0.1/fido</jdbc-url>
+      <jdbc-url>jdbc:mysql://192.168.110.232/fido</jdbc-url>
       <user-name>root</user-name>
       <user-password>dfd8dfc5dfc5dfde</user-password>
       <libraries />

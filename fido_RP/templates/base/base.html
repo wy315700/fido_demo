@@ -75,7 +75,7 @@
         <p>该网站作为整个fido认证体系的依赖方参与fido demo测试，
             依赖方即RP主要负责根据用户需求触发fido认证服务器形成身份认证或绑定请求，
             并供fido认证客户端查询支持的用户代理。</p>
-        {% if request.user %}
+        {% if request.user.is_authenticated %}
             <p><a href = "/addarticle/?edit=0" class="btn btn-primary btn-lg" role="button">发篇文章 &raquo;</a></p>
         {% else %}
             <p><a href = "/regist/" class="btn btn-primary btn-lg" role="button">加入fido &raquo;</a></p>
@@ -94,20 +94,13 @@
                 <em>汪洋</em>负责系统设计和代码编写。工程仍属开发阶段，必有不足之处，望请批评指点。</p>
           </div><!--sidebar-module-inset-->
           <div class="sidebar-module">
-            <h4>Archives</h4>
+            <h4>Roadmap</h4>
             <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
+              <li><a href="#">Nov.18th RP completed</a></li>
+              <li><a href="#">fido server developing</a></li>
+              <li><a href="#">fido client waiting</a></li>
+              <li><a href="#">ASM waiting</a></li>
+              <li><a href="#">authenticator waiting</a></li>
             </ol>
           </div><!--sidebar-module-->
           <div class="sidebar-module">

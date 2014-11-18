@@ -40,6 +40,7 @@
 {% endfor %}
 <h3>我&nbsp;的&nbsp;看&nbsp;法 <span class="label label-success">speak!</span></h3>
 <br/>
+{% if request.user.is_authenticated %}
 <form action = "" method = "post">
 {% csrf_token %}
 	<div>
@@ -61,6 +62,12 @@
         <input type = "submit" class="ibtn btn btn-success" style="float: right" value="发布">
     </div>
 </form>
+    {% else %}
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>先让我们认识你！</strong>&nbsp;&nbsp;&nbsp;请首先登录，再进行评论！
+    </div>
+    {% endif %}
 {% endblock %}
 {% block on_ready %}
     $('a.btn[id]').bind("click",function(){
