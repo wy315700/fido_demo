@@ -171,3 +171,7 @@ h6, .h6 {
     padding-right: 15px;
     position: relative;
 }
+
+.commentField{
+    width: 100%;
+}

@@ -20,7 +20,7 @@ class ArticleForm(forms.Form):
     content = forms.CharField(label = '内容', widget=forms.Textarea(attrs={'class': 'textarea'}))
 
 class CommentForm(forms.Form):
-    content = forms.CharField(label = '评论内容', widget = forms.Textarea)
+    content = forms.CharField(label = '评论内容', widget = forms.Textarea(attrs={'class': 'commentField'}))
     essayId = forms.IntegerField(label = '文章ID')
     publisher = forms.IntegerField(label = '发布者')
     tend = forms.ChoiceField(choices = [('1', '赞'), ('0', '可以接受'), ('-1', '倒')])

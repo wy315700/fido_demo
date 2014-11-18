@@ -186,7 +186,7 @@ def showArticle(request):
         essay = Essay.objects.filter(id = request.GET.get('id'))[0]
         comments = Comment.objects.filter(essay = request.GET.get('id'))
         for comment in comments:
-            if len(supportCommentRelation.objects.filter(userId = request.GET.get('uid'), commentId = comment.id)) != 0:
+            if len(supportCommentRelation.objects.filter(userId = request.GET.get('uid', 0), commentId = comment.id)) != 0:
                 comment.isSupported = True
             else:
                 comment.isSupported = False

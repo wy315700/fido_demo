@@ -4,7 +4,11 @@
     <div class="blog-main blog-list">
     {% for essay in essays %}
 	<div class="blog-post">
+    {% if request.user.is_authenticated %}
     <h6 class="blog-post-title"><a href = "/article/?id={{essay.id}}&uid={{request.user.id}}">{{essay.subject}}</a></h6>
+    {% else %}
+    <h6 class="blog-post-title"><a href = "/article/?id={{essay.id}}">{{essay.subject}}</a></h6>
+    {% endif %}
 	<p class="blog-post-meta">{{ essay.publish_date }} by <a href="/userinfo/?userId={{ essay.userId }}">{{ essay.username }}</a></p>
     {% if essay.content|length > 100 %}
 	<blockquote>
@@ -17,9 +21,9 @@
         <p>{{essay.content}}</p>
         {% endautoescape %}
     {% endif %}
-    {% if perms.article.delete_essay %}
+    {% if perms.article.delete_essay or request.user.id == essay.userId%}
    <!-- <a href = "/delarticle/?essayId={{essay.id}}">删除文章</a> -->
-    <button class="btn btn-danger" onclick="/delarticle/?essayId={{essay.id}}" style="float: right">删除文章</button></div>
+    <button class="btn btn-danger" onclick="location.href='/delarticle/?essayId={{essay.id}}'" style="float: right">删除文章</button></div>
     {% else %}
     </div>
     {% endif %}

@@ -23,7 +23,7 @@ class Essay(models.Model):
     userId = models.IntegerField(max_length=30, verbose_name="用户Id")
     username = models.CharField(max_length=40, verbose_name="用户名")
     subject = models.CharField(max_length = 50, verbose_name = "题目")
-    type = models.BooleanField(verbose_name = "是否原创")
+    type = models.BooleanField(default=True, verbose_name = "是否原创")
     category = models.ForeignKey(BaseCategory, verbose_name = "分类")
     content = models.TextField(verbose_name = "文章内容")
     modification_date = models.DateField(verbose_name = "修改时间")
