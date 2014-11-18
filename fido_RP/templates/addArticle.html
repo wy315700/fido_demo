@@ -1,37 +1,109 @@
 {% extends "base/base.html" %}
+{% block morecss %}
+{% load staticfiles %}
+	<link href="{% static "bootstrap/css/signin.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/prettify.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap-wysihtml5.css" %}" rel="stylesheet">
+    <style type="text/css" media="screen">
+	.btn.jumbo {
+		font-size: 20px;
+		font-weight: normal;
+		padding: 14px 24px;
+		margin-right: 10px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+	}
+
+    .textarea{
+        width: 810px;
+        height: 200px;
+    }
+
+    .ibtn{
+        margin:10px 60px 15px 200px;
+    }
+</style>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30181385-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+{% endblock %}
+{% block header %}
+{% endblock %}
+{% block sidebar %}
+{% endblock %}
 {% block content %}
-<form action = "/addarticle/?edit={{isEdit}}" method = "post">
-{% csrf_token %}
-    <div>
-        {{articleForm.subject.errors}}
-        <label>题目：</label>
-        {{articleForm.subject}}
-    </div>
-    <div>
-        {{articleForm.isOrigin.errors}}
-        <label>是否原创：</label>
-        {{articleForm.isOrigin}}
-    </div>
-    <div>
-        {{articleForm.category.errors}}
-        <label>分类：</label>
-        {{articleForm.category}}
-    </div>
-    <div>
-        {{articleForm.status.errors}}
-        <label>文章显示：</label>
-        {{articleForm.status}}
-    </div>
-    <div>
-        {{articleForm.tag.errors}}
-        <label>标签：</label>
-        {{articleForm.tag}}<p>多个标签请用半角逗号隔开</p>
-    </div>
-    <div>
-        {{articleForm.content.errors}}
-        <label>内容：</label>
-        {{articleForm.content}}
-    </div>
-    <input type = "submit" value="发布">
-</form>
+  <div class="container location-center">
+  <h2 class="form-signin-heading">编辑文章</h2>
+      <br/>
+      {% if isEdit %}
+          <form action = "/addarticle/?edit={{isEdit}}" method = "post">
+      {% else %}
+          <form action = "/addarticle/" method = "post">
+      {% endif %}
+    {% csrf_token %}
+        <div>
+            {{articleForm.subject.errors}}
+            <label>题目：</label>
+             {{articleForm.subject}}
+        </div>
+        <br/>
+        <div>
+            {{articleForm.isOrigin.errors}}
+            <label>是否原创：</label>
+            {{articleForm.isOrigin}}
+        </div>
+        <br/>
+        <div>
+            {{articleForm.category.errors}}
+            <label>分类：</label>
+            {{articleForm.category}}
+        </div>
+        <br/>
+        <div>
+            {{articleForm.status.errors}}
+            <label>文章显示：</label>
+            {{articleForm.status}}
+        </div>
+        <br/>
+        <div>
+            {{articleForm.tag.errors}}
+            <label>标签：</label>
+            {{articleForm.tag}}    多个标签请用半角逗号隔开
+        </div>
+        <div  class="hero-unit" style="margin-top:40px">
+            {{articleForm.content.errors}}
+            <label>内容：</label>
+            {{articleForm.content}}
+        </div>
+        <br/>
+        <input type = "submit" class="ibtn btn btn-success" value="发布">
+        <input type = "reset" class="ibtn btn btn-info" value="清空">
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="/static/bootstrap/js/wysihtml5-0.3.0.js"></script>
+    <script src="/static/bootstrap/js/prettify.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-wysihtml5.js"></script>
+
+    <script>
+        $('.textarea').wysihtml5();
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(prettyPrint);
+    </script>
 {% endblock %}
