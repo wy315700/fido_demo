@@ -128,6 +128,8 @@ def addArticle(request):
     if request.method == "POST":
         articleForm = ArticleForm(request.POST)
         oldEssayId = int(request.GET.get('edit', '0'))
+        userId = request.user.id
+        username = request.user.username
         if articleForm.is_valid():
             articleInfo = articleForm.cleaned_data
             if oldEssayId == 0:
@@ -138,7 +140,9 @@ def addArticle(request):
                     content = articleInfo['content'],
                     modification_date = time.strftime('%Y-%m-%d',time.localtime(time.time())),
                     publish_date = time.strftime('%Y-%m-%d',time.localtime(time.time())),
-                    essay_status = articleInfo['status']
+                    essay_status = articleInfo['status'],
+                    userId = userId,
+                    username = username
                 )
                 newEssay.save()
                 tagStr = articleInfo['tag']
@@ -162,7 +166,6 @@ def addArticle(request):
 
 def showArticle(request):
     isSupported = []
-    hi = "hello"
     if request.method == "POST":
         commentForm = CommentForm(request.POST)
         if commentForm.is_valid():

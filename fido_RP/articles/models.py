@@ -20,6 +20,8 @@ class Tag(models.Model):
 
 class Essay(models.Model):
     id = models.AutoField(primary_key = True)
+    userId = models.IntegerField(max_length=30, verbose_name="用户Id")
+    username = models.CharField(max_length=40, verbose_name="用户名")
     subject = models.CharField(max_length = 50, verbose_name = "题目")
     type = models.BooleanField(verbose_name = "是否原创")
     category = models.ForeignKey(BaseCategory, verbose_name = "分类")

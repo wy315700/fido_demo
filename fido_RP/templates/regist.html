@@ -12,40 +12,43 @@
     </div><!--/.navbar-right -->
 </div><!--/.navbar-collapse -->
 {% endblock %}
+{% block sidebar %}
+{% endblock %}
 {% block content %}
 <div class="container leave-top">
 <form action = "/regist/" method = "post" class="form-signin" role="form">
  <h2 class="form-signin-heading">欢迎光临本站</h2>
 {% csrf_token %}
     <div>
-        {{regForm.username.errors}}
         <label>用户名：</label>
         {{regForm.username}}
+        {{regForm.username.errors}}
     </div>
     <div>
-        {{regForm.last_name.errors}}
         <label>姓氏：</label>
         {{regForm.last_name}}
+        {{regForm.last_name.errors}}
     </div>
     <div>
-        {{regForm.first_name.errors}}
         <label>名字：</label>
         {{regForm.first_name}}
+        {{regForm.first_name.errors}}
     </div>
     <div>
-        {{regForm.password.errors}}
         <label>密码：</label>
         {{regForm.password}}
+        {{regForm.password.errors}}
     </div>
     <div>
-        {{regForm.confirmPassword.errors}}
+
         <label>确认密码：</label>
         {{regForm.confirmPassword}}
+        {{regForm.confirmPassword.errors}}
     </div>
     <div>
-        {{regForm.email.errors}}
         <label>邮箱：</label>
         {{regForm.email}}
+        {{regForm.email.errors}}
     </div>
 	<br>
     <button class="btn btn-lg btn-primary btn-block" type="submit">注&nbsp;&nbsp;&nbsp;册</button>

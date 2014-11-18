@@ -1,7 +1,9 @@
 {% extends "base/base.html" %}
 {% block content %}
 <h1>{{essay.subject}}</h1>
+    {% autoescape off %}
 <div>{{essay.content}}</div>
+    {% endautoescape %}
 {% if perms.article.change_essay %}
 <a href = "/editarticle/?essayId={{essay.id}}">编辑</a>
 {% endif %}

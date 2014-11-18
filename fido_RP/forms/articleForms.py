@@ -17,7 +17,7 @@ class ArticleForm(forms.Form):
     category = forms.ModelChoiceField(label = '分类', queryset = categories)
     status = forms.ChoiceField(choices = [('public', '公开'), ('limited', '受限'), ('private', '私密')])
     tag = forms.CharField(label = '标签', max_length = 50)
-    content = forms.CharField(label = '内容', widget = forms.Textarea)
+    content = forms.CharField(label = '内容', widget=forms.Textarea(attrs={'class': 'textarea'}))
 
 class CommentForm(forms.Form):
     content = forms.CharField(label = '评论内容', widget = forms.Textarea)
