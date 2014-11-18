@@ -19,5 +19,6 @@ urlpatterns = patterns('',
     url(r'^support/', 'articles.views.showSupport'),
     url(r'^editarticle/', 'articles.views.editActicle'),
     url(r'^facetid/', 'articles.views.getFaceIdList'),
+    url(r'^trustedapps', 'articles.views.getTrustedApps'),
     url(r'^admin/', include(admin.site.urls)),
 )

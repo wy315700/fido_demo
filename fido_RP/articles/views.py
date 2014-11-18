@@ -11,6 +11,8 @@ from articles.models import Essay, Tag, tagEssayRelation, Comment, supportCommen
 from django.core.exceptions import ObjectDoesNotExist
 import time
 
+import json
+
 # Create your views here.
 def getMainPage(request):
     fails = False
@@ -226,3 +228,18 @@ def showSupport(request):
             )
         relation.save()
     return HttpResponse(supportNum)
+
+def getTrustedApps(request):
+    facetIds = FacetIDs.objects.all();
+    version = {
+        "mj" : 1,
+        "mn" : 0,
+    }
+    facetIdList = []
+    for x in facetIds:
+        facetIdList.append(x.facetId)
+    TrustedApps = {
+        "version" : version,
+        "ids"     : facetIdList,
+    }
+    return HttpResponse(json.dumps(TrustedApps), content_type = "vnd.fi- do.trusted-apps+json")
