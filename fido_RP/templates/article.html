@@ -12,7 +12,7 @@
     {% endifequal %}
 <div class="blog-main" >{{essay.content}}</div>
     {% endautoescape %}
-{% if perms.article.change_essay or request.user.id == essay.userId %}
+{% if perms.articles.change_essay or request.user.id == essay.userId %}
 <button class="btn btn-warning" onclick = "location.href='/editarticle/?essayId={{essay.id}}'" style="float: right">修改文章</button>
 {% endif %}
 <br/><br/>
@@ -28,7 +28,7 @@
 {% else %}
 <a class = "btn" id = "{{comment.id}}" href="#">赞({{comment.support_num}})</a>&nbsp;&nbsp;&nbsp;
 {% endif %}
-{% if perms.article.delete_comment or comment.publisher.username == request.user.username %}
+{% if perms.articles.delete_comment or comment.publisher.username == request.user.username %}
 <a href = "/delcomment/?commentId={{comment.id}}&essayId={{comment.essay.id}}">删除</a>
 {% endif %}
     </small>
@@ -42,7 +42,7 @@
 {% endfor %}
 <h3>我&nbsp;的&nbsp;看&nbsp;法 <span class="label label-success">speak!</span></h3>
 <br/>
-{% if request.user.is_authenticated and perms.article.add_commit and essay.essay_status == 'public' %}
+{% if request.user.is_authenticated and perms.articles.add_comment and essay.essay_status == 'public' %}
 <form action = "" method = "post">
 {% csrf_token %}
 	<div>

@@ -21,7 +21,7 @@
         <p>{{essay.content}}</p>
         {% endautoescape %}
     {% endif %}
-    {% if perms.article.delete_essay or request.user.id == essay.userId%}
+    {% if perms.articles.delete_essay or request.user.id == essay.userId%}
    <!-- <a href = "/delarticle/?essayId={{essay.id}}">删除文章</a> -->
     <button class="btn btn-danger" onclick="location.href='/delarticle/?essayId={{essay.id}}'" style="float: right">删除文章</button></div>
     {% else %}
