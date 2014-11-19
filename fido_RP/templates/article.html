@@ -35,14 +35,14 @@
 </blockquote>
 <br/>
 {% empty %}
-<div class="alert alert-info">
+<div class="alert alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>=_=悲剧~</strong>&nbsp;&nbsp;&nbsp;本文暂无评论，快来发表你的看法吧！
 </div>
 {% endfor %}
 <h3>我&nbsp;的&nbsp;看&nbsp;法 <span class="label label-success">speak!</span></h3>
 <br/>
-{% if request.user.is_authenticated and perms.article.add_commit %}
+{% if request.user.is_authenticated and perms.article.add_commit and essay.essay_status == 'public' %}
 <form action = "" method = "post">
 {% csrf_token %}
 	<div>
@@ -66,10 +66,17 @@
 </form>
     {% else %}
         {% if request.user.is_authenticated %}
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>抱歉！</strong>&nbsp;&nbsp;&nbsp;您暂时未取得评论权限，请联系管理员！
-            </div>
+            {% if essay.essay_status == 'limited' %}
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>抱歉！</strong>&nbsp;&nbsp;&nbsp;本文作者暂未开放评论！
+                </div>
+            {% else %}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>抱歉！</strong>&nbsp;&nbsp;&nbsp;您暂时未取得评论权限，请联系管理员！
+                </div>
+            {% endif %}
         {% else %}
             <div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>

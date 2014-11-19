@@ -30,7 +30,7 @@ def getMainPage(request):
 
     else:
         loginform = LoginForm()
-    essays = Essay.objects.filter(essay_status = 'public')
+    essays = Essay.objects.filter(essay_status__in = ['public', 'limited'])
     return render_to_response('index.html', locals(), context_instance = RequestContext(request))
 
 # def userLogin(request):
@@ -156,7 +156,7 @@ def addArticle(request):
                 newEssay.category = articleInfo['category']
                 newEssay.content = articleInfo['content']
                 newEssay.modification_date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
-                newEssay.status = articleInfo['status']
+                newEssay.essay_status = articleInfo['status']
                 newEssay.save()
                 tagStr = articleInfo['tag']
                 handleTag(tagStr, newEssay)
