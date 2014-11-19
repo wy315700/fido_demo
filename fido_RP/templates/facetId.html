@@ -4,6 +4,7 @@
             <li class="inactive"><a href="/index/">Home</a></li>
             {% if request.user.id %}
             <li class="inactive"><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
+            <li class="inactive"><a href="/bind">绑定</a></li>
             {% endif %}
             <li class="active"><a href="/facetid/">FacetIDs</a></li>
           </ul>
