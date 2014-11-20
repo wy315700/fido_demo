@@ -251,15 +251,15 @@ def getTrustedApps(request):
 
 def bindUsers(request):
     payload = {
-        'username' : self.request.user.username,
-        'appid'    : self.request.scheme + '://' + self.request.get_host() + 'trustedapps'
+        'username' : request.user.username,
+        'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
     }
     r = requests.get("http://fido_server_url", params=payload)
     return HttpResponse(r.text)
 
 def getAuthenticated(request):
     payload = {
-        'appid'    : self.request.scheme + '://' + self.request.get_host() + 'trustedapps'
+        'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
     }
     r = requests.get("http://fido_server_url", params=payload)
     return HttpResponse(r.text)
