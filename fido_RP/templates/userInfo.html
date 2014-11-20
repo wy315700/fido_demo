@@ -4,7 +4,9 @@
         <li class="inactive"><a href="/index/">Home</a></li>
         {% if request.user.id %}
             <li class="active"><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
+            <li class="inactive"><a href="/bind">绑定</a></li>
         {% endif %}
+        <li class="inactive"><a href="/authenticate">认证</a></li>
         <li class="inactive"><a href="/facetid/">FacetIDs</a></li>
     </ul>
 {% endblock %}

@@ -20,5 +20,7 @@ urlpatterns = patterns('',
     url(r'^editarticle/', 'articles.views.editActicle'),
     url(r'^facetid/', 'articles.views.getFaceIdList'),
     url(r'^trustedapps', 'articles.views.getTrustedApps'),
+    url(r'^bind', 'articles.views.bindUsers'),
+    url(r'^authenticate', 'articles.views.getAuthenticated'),
     url(r'^admin/', include(admin.site.urls)),
 )
