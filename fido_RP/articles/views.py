@@ -31,7 +31,7 @@ def getMainPage(request):
 
     else:
         loginform = LoginForm()
-    essays = Essay.objects.filter(essay_status = 'public')
+    essays = Essay.objects.filter(essay_status__in = ['public', 'limited'])
     return render_to_response('index.html', locals(), context_instance = RequestContext(request))
 
 # def userLogin(request):
@@ -104,6 +104,7 @@ def editActicle(request):
     return render_to_response('addArticle.html', locals(), context_instance = RequestContext(request))
 
 def handleTag(tagStr, newEssay):
+    tagEssayRelation.objects.filter(essayId = newEssay.id).delete()
     tag_id = 0
     final_tag = Tag()
     tagList = tagStr.split(',')
@@ -157,7 +158,7 @@ def addArticle(request):
                 newEssay.category = articleInfo['category']
                 newEssay.content = articleInfo['content']
                 newEssay.modification_date = time.strftime('%Y-%m-%d',time.localtime(time.time()))
-                newEssay.status = articleInfo['status']
+                newEssay.essay_status = articleInfo['status']
                 newEssay.save()
                 tagStr = articleInfo['tag']
                 handleTag(tagStr, newEssay)

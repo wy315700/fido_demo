@@ -80,7 +80,7 @@
             依赖方即RP主要负责根据用户需求触发fido认证服务器形成身份认证或绑定请求，
             并供fido认证客户端查询支持的用户代理。</p>
         {% if request.user.is_authenticated %}
-            {% if perms.article.add_essay %}
+            {% if perms.articles.add_essay %}
                 <p><a href = "/addarticle/?edit=0" class="btn btn-primary btn-lg" role="button">发篇文章 &raquo;</a></p>
             {% else %}
                 <p><a href = "#" class="btn btn-primary btn-lg" role="button" disabled="disabled">暂无发表文章权限 -_-</a></p>
