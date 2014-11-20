@@ -13,7 +13,7 @@ class UserPub(models.Model):
 
 class Policy(models.Model):
     pid = models.AutoField(primary_key=True)
-    aaid = models.IntegerField(max_length=50, verbose_name="设备号")
+    aaid = models.CharField(max_length=50, verbose_name="设备号")
     authFactor = models.PositiveIntegerField(verbose_name="认证因子")
     keyPro = models.PositiveIntegerField(verbose_name="密钥保护")
     attachment = models.PositiveIntegerField(verbose_name="附加类型")
@@ -44,7 +44,7 @@ class PolicyScheme(models.Model):
 
 class AuthMeta(models.Model):
     amid = models.AutoField(primary_key=True)
-    aaid = models.IntegerField(max_length=50, verbose_name="设备号")
+    aaid = models.CharField(max_length=50, verbose_name="设备号")
     certificate = models.TextField(verbose_name="设备证书")
     description = models.CharField(max_length=200, verbose_name="设备描述")
     veriMethod = models.PositiveIntegerField(verbose_name="认证方法")
