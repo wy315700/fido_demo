@@ -21,7 +21,7 @@ def getMainPage(request):
         loginform = LoginForm(request.POST)
         if loginform.is_valid():
             userData = loginform.cleaned_data
-            user = authenticate( username = userData['username'], password = userData['password'])
+            user = authenticate(username = userData['username'], password = userData['password'])
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect('/index/')

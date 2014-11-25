@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% block left-header %}
+		  <ul class="nav navbar-nav">
+            <li class="inactive"><a href="/meta/">Meta</a></li>
+            <li class="inactive"><a href="/policy/">Policy</a></li>
+            <li class="inactive"><a href="/userpub/">publicKey</a></li>
+          <li class="active"><a href="/others/">others</a></li>
+          </ul>
+        {% endblock %}
+{% block content %}
+
+    <h3 style="text-align: center">认证算法列表</h3>
+    <table data-toggle="table" data-height="299" data-pagination="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1">
+    <thead>
+    <tr>
+        <th data-field="alid" data-align="center">编号</th>
+        <th data-field="authalgs" data-align="center">具体算法</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for alg in algs %}
+    <tr>
+        <td>{{ alg.alid }}</td>
+        <td>{{ alg.authalgs }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <br/><br/><br/>
+    <h3 style="text-align: center">认证方案列表</h3>
+    <table data-toggle="table" data-height="299" data-pagination="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1">
+    <thead>
+    <tr>
+        <th data-field="alid" data-align="center">编号</th>
+        <th data-field="authalgs" data-align="center">具体方案</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for scheme in schemes %}
+    <tr>
+        <td>{{ scheme.ssid }}</td>
+        <td>{{ scheme.supportedScheme }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

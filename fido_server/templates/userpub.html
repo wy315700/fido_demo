@@ -1,0 +1,34 @@
+{% extends "base/base.html" %}
+{% block left-header %}
+		   <ul class="nav navbar-nav">
+            <li class="inactive"><a href="/meta/">Meta</a></li>
+            <li class="inactive"><a href="/policy/">Policy</a></li>
+            <li class="active"><a href="/userpub/">publicKey</a></li>
+           <li class="inactive"><a href="/others/">others</a></li>
+          </ul>
+        {% endblock %}
+{% block content %}
+    <h3 style="text-align: center">用户&nbsp;用户名-公钥列表</h3>
+    <table data-toggle="table" data-height="299" data-pagination="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1">
+    <thead>
+    <tr>
+        <th data-field="upid" data-align="center">编号</th>
+        <th data-field="username" data-align="center">用户名</th>
+        <th data-field="publickey" data-align="center">用户公钥</th>
+        <th data-field="keyid" data-align="center">key ID</th>
+        <th data-field="extension" data-align="center">扩展信息</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in userpub %}
+    <tr>
+        <td>{{ user.upid }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.publicKey }}</td>
+        <td>{{ user.keyid }}</td>
+        <td>{{ user.extension }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

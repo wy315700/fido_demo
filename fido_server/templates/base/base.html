@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+    <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+	{% block title %}{% endblock %}
+	{% load staticfiles %}
+	 <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+	  <link href="{% static "bootstrap/css/blog.css" %}" rel="stylesheet"> 
+	 <link href="{% static "bootstrap/css/jumbotron.css" %}" rel="stylesheet">
+	 <link href="{% static "bootstrap/css/fonts.css" %}" rel="stylesheet">
+     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap-table.css"%}">
+	 {% block morecss %}{% endblock %}
+    <title>fido server</title>
+	</head>
+	<body>
+    <script src="/static/js/jquery-1.11.1.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-table.js"></script>
+    <script src="/static/bootstrap/js/jquery-2.1.1.min.js"></script>
+	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">fido server</a>
+          {% block left-header %}
+        {% endblock %}
+        </div><!--/.navbar-header -->
+		{% block right-header %}
+        <div class="navbar-collapse collapse">
+            <div class="navbar-right">
+			<a class="navbar-brand" href="#">欢迎您，{{request.user}}</a>
+			<button onclick="window.location.href='/logout/'" class="btn btn-logout">注&nbsp;&nbsp;销</button>
+            </div><!--/.navbar-right -->
+        </div><!--/.navbar-collapse -->
+		{% endblock %}
+      </div><!--/.container -->
+    </div><!--/.navigation -->
+	<div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+	{% block header %}
+	<div class="jumbotron leave-top">
+        <h1>Hello, fido!</h1>
+        <p>该网站作为整个fido认证体系的认证服务器参与fido demo测试，
+            认证服务器即fido server主要负责形成身份认证或绑定请求并向下传递，并解析传回的身份绑定或请求相应。
+            fido server同时包含认证设备元数据，保存支持的认证设备信息。</p>
+    </div>
+	{% endblock %}
+    {% block content %}
+    {% endblock %}
+	</div> <!--col-xs-12-->
+    {% block sidebar %}
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas leave-top" id="sidebar" role="navigation">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>该项目由中国科学院信息安全国家重点实验室网络与系统安全组主持，由<em>胡铭铭</em>，<em>寇睿明</em>，
+                <em>汪洋</em>负责系统设计和代码编写。工程仍属开发阶段，必有不足之处，望请批评指点。</p>
+          </div><!--sidebar-module-inset-->
+          <div class="sidebar-module">
+            <h4>Roadmap</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">Nov.18th RP completed</a></li>
+              <li><a href="#">fido server developing</a></li>
+              <li><a href="#">fido client waiting</a></li>
+              <li><a href="#">ASM waiting</a></li>
+              <li><a href="#">authenticator waiting</a></li>
+            </ol>
+          </div><!--sidebar-module-->
+          <div class="sidebar-module">
+            <h4>相关链接</h4>
+            <ol class="list-unstyled">
+              <li><a href="https://github.com/wy315700/fido_demo">GitHub</a></li>
+              <li><a href="http://fidoalliance.org/">fido alliance</a></li>
+              <li><a href="http://www.iie.ac.cn/">中科院信工所</a></li>
+            </ol>
+          </div><!--sidebar-module-->
+        </div><!--/sidebar-->
+{% endblock %}
+        </div><!--/.row row-offcanvas row-offcanvas-right -->
+    </div><!--/containter-->
+    {% block js %}
+    {% endblock %}
+    <script>
+    $(function(){
+        {% block on_ready %}
+        {% endblock %}
+    }
+        );
+    </script>
+	
+	{% block footer %}
+	{% endblock %}
+    </body>
+</html>

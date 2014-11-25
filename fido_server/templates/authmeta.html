@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+{% block left-header %}
+		  <ul class="nav navbar-nav">
+            <li class="active"><a href="/meta/">Meta</a></li>
+            <li class="inactive"><a href="/policy/">Policy</a></li>
+            <li class="inactive"><a href="/userpub/">publicKey</a></li>
+          <li class="inactive"><a href="/others/">others</a></li>
+          </ul>
+        {% endblock %}
+{% block content %}
+    <h3 style="text-align: center">认证设备元数据列表</h3>
+    <table data-toggle="table" data-height="299" data-pagination="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1">
+    <thead>
+    <tr>
+        <th data-field="amid" data-align="center">编号</th>
+        <th data-field="aaid" data-align="center">设备编号</th>
+        <th data-field="certificate" data-align="center">设备证书</th>
+        <th data-field="description" data-align="center">设备描述</th>
+        <th data-field="veriMethod" data-align="center">验证方法</th>
+        <th data-field="attachment" data-align="center">连接类型</th>
+        <th data-field="keyPro" data-align="center">密钥保护</th>
+        <th data-field="securDis" data-align="center">安全显示</th>
+        <th data-field="ifSecond" data-align="center">第二认证</th>
+        <th data-field="logo" data-align="center">认证logo</th>
+        <th data-field="scheme" data-align="center">支持方案</th>
+        <th data-field="authAlgs" data-align="center">支持算法</th>
+        <th data-field="miniVer" data-align="center">最小版本</th>
+        <th data-field="maxVer" data-align="center">最大版本</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for meta in authMeta %}
+    <tr>
+        <td>{{ meta.amid }}</td>
+        <td>{{ meta.aaid }}</td>
+        <td>{{ meta.certificate }}</td>
+        <td>{{ meta.description }}</td>
+        <td>{{ meta.veriMethod }}</td>
+        <td>{{ meta.attachment }}</td>
+        <td>{{ meta.keyPro }}</td>
+        <td>{{ meta.securDis }}</td>
+        <td>{{ meta.ifSecond }}</td>
+        <td>{{ meta.logo }}</td>
+        <td>{{ meta.scheme }}</td>
+        <td>{{ meta.authAlgs }}</td>
+        <td>{{ meta.miniVer }}</td>
+        <td>{{ meta.maxVer }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+{% block left-header %}
+		  <ul class="nav navbar-nav">
+            <li class="inactive"><a href="/meta/">Meta</a></li>
+            <li class="active"><a href="/policy/">Policy</a></li>
+            <li class="inactive"><a href="/userpub/">publicKey</a></li>
+          <li class="inactive"><a href="/others/">others</a></li>
+          </ul>
+        {% endblock %}
+{% block content %}
+    <h3 style="text-align: center">认证策略列表</h3>
+    <table data-toggle="table" data-height="299" data-pagination="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1">
+    <thead>
+    <tr>
+        <th data-field="pid" data-align="center">编号</th>
+        <th data-field="aaid" data-align="center">设备编号</th>
+        <th data-field="appid" data-align="center">应用编号</th>
+        <th data-field="authFactor" data-align="center">用户公钥</th>
+        <th data-field="keyPro" data-align="center">key ID</th>
+        <th data-field="attachment" data-align="center">扩展信息</th>
+        <th data-field="securDis" data-align="center">安全显示</th>
+        <th data-field="algorithm" data-align="center">支持算法</th>
+        <th data-field="scheme" data-align="center">支持方案</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for policy in newPolicies %}
+    <tr>
+        <td>{{ policy.pid }}</td>
+        <td>{{ policy.aaid }}</td>
+        <td>{{ policy.appid }}</td>
+        <td>{{ policy.authFactor }}</td>
+        <td>{{ policy.keyPro }}</td>
+        <td>{{ policy.attachment }}</td>
+        <td>{{ policy.securDis }}</td>
+        <td><a href="/others/">{{ policy.algorithm }}</a></td>
+        <td><a href="/others/">{{ policy.scheme }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
