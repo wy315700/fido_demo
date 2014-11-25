@@ -90,6 +90,18 @@ def userLogout(request):
     logout(request)
     return HttpResponseRedirect('/index/')
 
+
+def validated(request):
+    json_value = request.GET['value']
+    set_validated = bool(int(request.GET['setValidated']))
+    data = json.loads(json_value)
+    upid = int(data['upid'])
+    userpub = UserPub.objects.filter(upid=upid)[0]
+    userpub.isValidate = set_validated
+    userpub.save()
+    return HttpResponse(upid)
+
+
 def getBindRequest(request):
     username = request.GET['username']
     appid    = request.GET['appid']

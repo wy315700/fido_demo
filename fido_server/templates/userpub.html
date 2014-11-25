@@ -17,6 +17,8 @@
         <th data-field="publickey" data-align="center">用户公钥</th>
         <th data-field="keyid" data-align="center">key ID</th>
         <th data-field="extension" data-align="center">扩展信息</th>
+        <th data-field="isValidate" data-align="center">有效性</th>
+        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" data-align="center">设置有效性</th>
     </tr>
     </thead>
     <tbody>
@@ -27,8 +29,64 @@
         <td>{{ user.publicKey }}</td>
         <td>{{ user.keyid }}</td>
         <td>{{ user.extension }}</td>
+        {% if user.isValidate %}
+            <td id = {{ user.upid }}>有效</td>
+        {% else %}
+            <td id = {{ user.upid }}>无效</td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>
 </table>
+{% endblock %}
+
+{% block js %}
+    <script>
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="like" href="javascript:void(0)" title="Like">',
+                '<i class="glyphicon glyphicon-heart"></i>',
+            '</a>',
+            '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+                '<i class="glyphicon glyphicon-remove"></i>',
+            '</a>'
+        ].join('  ');
+    }
+
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            var json_value = JSON.stringify(row)
+            $.ajax({
+                type:"get",
+                url: "/validated/",
+                data:{
+                    setValidated : 1,
+                    value : json_value,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success:function(data){
+                    $("#" + data).html("有效");
+                }
+            }
+            );
+
+        },
+        'click .remove': function (e, value, row, index) {
+            var json_value = JSON.stringify(row)
+            $.ajax({
+                type:"get",
+                url: "/validated/",
+                data:{
+                    setValidated :0,
+                    value : json_value,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success:function(data){
+                    $("#" + data).html("无效");
+                }
+            }
+            );
+        }
+    };
+</script>
 {% endblock %}
