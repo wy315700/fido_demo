@@ -21,6 +21,7 @@
         <th data-field="securDis" data-align="center">安全显示</th>
         <th data-field="algorithm" data-align="center">支持算法</th>
         <th data-field="scheme" data-align="center">支持方案</th>
+        <th data-field="allowed" data-align="center">允许/禁止&nbsp;&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -35,6 +36,11 @@
         <td>{{ policy.securDis }}</td>
         <td><a href="/others/">{{ policy.algorithm }}</a></td>
         <td><a href="/others/">{{ policy.scheme }}</a></td>
+        {% if policy.allowed %}
+            <td>允许</td>
+        {% else %}
+            <td>禁止</td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>

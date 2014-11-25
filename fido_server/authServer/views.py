@@ -13,7 +13,6 @@ from django.utils.safestring import SafeString
 import time
 
 import json
-import requests
 from base64 import urlsafe_b64encode
 from os import urandom
 

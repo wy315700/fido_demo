@@ -8,6 +8,7 @@ class UserPub(models.Model):
     username = models.CharField(max_length=30, verbose_name="用户名")
     publicKey = models.TextField(verbose_name="用户公钥")
     keyid = models.CharField(max_length=100, verbose_name="keyID")
+    isValidate = models.NullBooleanField(verbose_name="是否有效")
     extension = models.CharField(max_length=100)
 
 
@@ -19,6 +20,7 @@ class Policy(models.Model):
     keyPro = models.PositiveIntegerField(verbose_name="密钥保护")
     attachment = models.PositiveIntegerField(verbose_name="附加类型")
     securDis = models.PositiveIntegerField(verbose_name="安全显示")
+    allowed = models.NullBooleanField(verbose_name="是否允许")
 
 
 class AuthAlgorithm(models.Model):
