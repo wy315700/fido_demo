@@ -30,9 +30,9 @@
         <td>{{ user.keyid }}</td>
         <td>{{ user.extension }}</td>
         {% if user.isValidate %}
-            <td id = {{ user.upid }}>有效</td>
+            <td id = {{ user.upid }} class="validate">有效</td>
         {% else %}
-            <td id = {{ user.upid }}>无效</td>
+            <td id = {{ user.upid }} class="invalidate">无效</td>
         {% endif %}
     </tr>
     {% endfor %}
@@ -66,6 +66,8 @@
                 },
                 success:function(data){
                     $("#" + data).html("有效");
+                    $("#" + data).removeClass("invalidate");
+                    $("#" + data).addClass("validate");
                 }
             }
             );
@@ -83,6 +85,8 @@
                 },
                 success:function(data){
                     $("#" + data).html("无效");
+                    $("#" + data).removeClass("validate");
+                    $("#" + data).addClass("invalidate");
                 }
             }
             );

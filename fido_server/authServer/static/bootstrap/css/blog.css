@@ -180,6 +180,10 @@ h6, .h6 {
 
 }
 
-.isvalidate{
+.validate{
+    color: green;
+}
 
+.invalidate{
+    color: gray;
 }
