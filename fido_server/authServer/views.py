@@ -113,20 +113,8 @@ def getBindRequest(request):
         },
         "appid" : appid
     }
-    policy = {
-        'accepted' : [[{
-            "authenticationFactor": 0x00000000000001ff,
-            "keyProtection": 0x000000000000000e,
-            "attachment": 0x00000000000000ff,
-            "secureDisplay": 0x000000000000001e,
-            "supportedSchemes": "UAFV1TLV",
-        }]],
-        'disallowed' : {
-            "aaid": "1234#5678"
-        }
-    }
-    random_bytes = urandom(64)
-    chanllenge   = urlsafe_b64encode(random_bytes)
+    policy = generatePolicy(appid)
+    chanllenge   = generateChanllenge()
 
     request = {
         'header' : header,
@@ -147,20 +135,10 @@ def getAuthRequest(request):
         },
         "appid" : appid
     }
-    policy = {
-        'accepted' : [[{
-            "authenticationFactor": 0x00000000000001ff,
-            "keyProtection": 0x000000000000000e,
-            "attachment": 0x00000000000000ff,
-            "secureDisplay": 0x000000000000001e,
-            "supportedSchemes": "UAFV1TLV",
-        }]],
-        'disallowed' : {
-            "aaid": "1234#5678"
-        }
-    }
-    random_bytes = urandom(64)
-    chanllenge   = urlsafe_b64encode(random_bytes)
+    policy = generatePolicy(appid)
+    
+    chanllenge   = generateChanllenge()
+
     transaction = {
         'contentType' : 'text/plain',
         'content' : 'hello world'
@@ -172,4 +150,45 @@ def getAuthRequest(request):
         'transaction' : transaction
     }
     return HttpResponse(json.dumps(request))
+
+def generatePolicy(appid):
+    policies = Policy.objects.filter(appid = appid)
+    accepted_list = []
+    for p in policies:
+        policy_algs = PolicyAlgs.objects.filter(pid=p.pid)
+        algs = []
+        if policy_algs:
+            for x in policy_algs:
+                algs.append(x.alid)
+        policy_scheme = PolicyScheme.objects.filter(pid=p.pid)
+        schemes = []
+        if policy_scheme:
+            for x in policy_schema:
+                schemes.append(x.ssid)
+        accepte = [{
+            "authenticationFactor": p.authFactor,
+            "keyProtection": p.keyPro,
+            "attachment": p.attachment,
+            "secureDisplay": p.secureDisplay,
+            "supportedAuthAlgs" :algs,
+            "supportedSchemes": schemes,
+        }]
+        accepted_list.append(accepte)
+    policy = {
+        'accepted' : accepted_list,
+        'disallowed' : {
+            "aaid": "1234#5678"
+        }
+    }
+    return policy
+
+def generateChanllenge(length = 64):
+    global GLOBAL_CHANLLENGE_SET
+    random_bytes = urandom(length)
+    chanllenge   = urlsafe_b64encode(random_bytes)
+    GLOBAL_CHANLLENGE_SET.add(chanllenge)
+    print GLOBAL_CHANLLENGE_SET
+    return chanllenge
+
+GLOBAL_CHANLLENGE_SET = set()
 
