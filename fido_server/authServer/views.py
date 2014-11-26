@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from authServer.models import UserPub, Policy, PolicyAlgs, PolicyScheme, AuthMeta, AuthAlgorithm, Scheme
 from forms.userForms import LoginForm
 from django.utils.safestring import SafeString
+from django.views.decorators.csrf import csrf_exempt
 
 import time
 
@@ -16,6 +17,7 @@ import json
 from base64 import urlsafe_b64encode
 from os import urandom
 
+import fido_handle
 
 def getMainPage(request):
     fails = False
@@ -113,8 +115,8 @@ def getBindRequest(request):
         },
         "appid" : appid
     }
-    policy = generatePolicy(appid)
-    chanllenge   = generateChanllenge()
+    policy = fido_handle.generatePolicy(appid)
+    chanllenge   = fido_handle.generateChanllenge()
 
     request = {
         'header' : header,
@@ -135,9 +137,9 @@ def getAuthRequest(request):
         },
         "appid" : appid
     }
-    policy = generatePolicy(appid)
+    policy = fido_handle.generatePolicy(appid)
     
-    chanllenge   = generateChanllenge()
+    chanllenge   = fido_handle.generateChanllenge()
 
     transaction = {
         'contentType' : 'text/plain',
@@ -151,44 +153,40 @@ def getAuthRequest(request):
     }
     return HttpResponse(json.dumps(request))
 
-def generatePolicy(appid):
-    policies = Policy.objects.filter(appid = appid)
-    accepted_list = []
-    for p in policies:
-        policy_algs = PolicyAlgs.objects.filter(pid=p.pid)
-        algs = []
-        if policy_algs:
-            for x in policy_algs:
-                algs.append(x.alid)
-        policy_scheme = PolicyScheme.objects.filter(pid=p.pid)
-        schemes = []
-        if policy_scheme:
-            for x in policy_schema:
-                schemes.append(x.ssid)
-        accepte = [{
-            "authenticationFactor": p.authFactor,
-            "keyProtection": p.keyPro,
-            "attachment": p.attachment,
-            "secureDisplay": p.secureDisplay,
-            "supportedAuthAlgs" :algs,
-            "supportedSchemes": schemes,
-        }]
-        accepted_list.append(accepte)
-    policy = {
-        'accepted' : accepted_list,
-        'disallowed' : {
-            "aaid": "1234#5678"
-        }
-    }
-    return policy
+@csrf_exempt
+def postBindResponse(request):
+    if request.method == 'POST':
+        response_str = request.body
 
-def generateChanllenge(length = 64):
-    global GLOBAL_CHANLLENGE_SET
-    random_bytes = urandom(length)
-    chanllenge   = urlsafe_b64encode(random_bytes)
-    GLOBAL_CHANLLENGE_SET.add(chanllenge)
-    print GLOBAL_CHANLLENGE_SET
-    return chanllenge
+        try:
+            response_dict = json.loads(response_str)
+            header = response_dict['header']
+            fcParams = response_dict['fcParams']
+            assertions = response_dict['assertions']
+        except ValueError, e:
+            raise
+        else:
+            pass
+        finally:
+            pass
 
-GLOBAL_CHANLLENGE_SET = set()
+        op =  fido_handle.verifyHeaders(header)
+        if not op:
+            return HttpResponse('')
+        print fcParams
+        result = fido_handle.verifyFcParams(fcParams)
+
+    else:
+        return HttpResponse('')
+    return HttpResponse('')
+
+@csrf_exempt
+def postAuthResponse(request):
+    if request.method == 'POST':
+        response_str = request.body
+    else:
+        return HttpResponse('')
+    return HttpResponse(json.dumps(request))
+
+
 
