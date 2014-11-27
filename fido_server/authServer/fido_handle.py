@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import time
-from authServer.models import UserPub, Policy, PolicyAlgs, PolicyScheme
+from authServer.models import UserPub, Policy, PolicyAlgs, PolicyScheme, TrustedApps
 from Crypto.PublicKey import RSA
 from Crypto.Hash import MD5
 import json
@@ -10,13 +10,7 @@ from os import urandom
 
 
 def userRegisteration(username, publickey, keyid, extension=None):
-    userpub = UserPub(
-        username=username,
-        publicKey=publickey,
-        keyid=keyid,
-        extension=extension
-    )
-    userpub.save()
+    UserPub.objects.create(username=username, publicKey=publickey, eyid=keyid, extension=extension)
 
 
 def signatureVerification(publickey, content, signature):
@@ -57,21 +51,21 @@ def generatePolicy(appid):
     }
     return policy
 
-def generateChanllenge(length = 64):
-    global GLOBAL_CHANLLENGE_SET
+def generateChallenge(length = 64):
+    global GLOBAL_CHALLENGE_SET
     random_bytes = urandom(length)
-    chanllenge   = urlsafe_b64encode(random_bytes)
-    GLOBAL_CHANLLENGE_SET.add(chanllenge)
-    print GLOBAL_CHANLLENGE_SET
-    return chanllenge
+    challenge   = urlsafe_b64encode(random_bytes)
+    GLOBAL_CHALLENGE_SET.add(challenge)
+    print GLOBAL_CHALLENGE_SET
+    return challenge
 
-def verifyChanllenge(chanllenge, need_delete = True):
-    global GLOBAL_CHANLLENGE_SET
-    chanllenge = str(chanllenge)
-    if chanllenge not in GLOBAL_CHANLLENGE_SET:
+def verifyChallenge(challenge, need_delete = True):
+    global GLOBAL_CHALLENGE_SET
+    challenge = str(challenge)
+    if challenge not in GLOBAL_CHALLENGE_SET:
         return False
 
-    GLOBAL_CHANLLENGE_SET.remove(chanllenge)
+    GLOBAL_CHALLENGE_SET.remove(challenge)
 
     return True
 
@@ -79,7 +73,7 @@ def base64AddPadding(b64_string):
     b64_string += "=" * ((4 - len(b64_string) % 4) % 4)
     return b64_string
 
-GLOBAL_CHANLLENGE_SET = set('54698zhfdksjgh876ujhghj7')
+GLOBAL_CHALLENGE_SET = set('54698zhfdksjgh876ujhghj7')
 
 def verifyHeaders(header):
     upv = header['upv']
@@ -107,12 +101,16 @@ def verifyFcParams(fcParams):
     facetID = fcp['facetID']
     tlsData = fcp['tlsData']
 
-    if not verifyChanllenge(challenge):
+    if not verifyChallenge(challenge):
         return False
 
     # TODO:verify appid && facetID
-
-    return True
+    trusted = TrustedApps.objects.filter(appid=appid)
+    if trusted is not None:
+        for app in trusted:
+            if facetID == app.facetid:
+                return True
+    return False
 
 
 def veryfiRegAssertion(assertion):
