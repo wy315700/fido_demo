@@ -15,7 +15,7 @@ class UserPub(models.Model):
 class Policy(models.Model):
     pid = models.AutoField(primary_key=True)
     aaid = models.CharField(max_length=50, verbose_name="设备号")
-    appid = models.CharField(max_length=50, verbose_name="应用编号")
+    appid = models.URLField(verbose_name="应用编号")
     authFactor = models.PositiveIntegerField(verbose_name="认证因子")
     keyPro = models.PositiveIntegerField(verbose_name="密钥保护")
     attachment = models.PositiveIntegerField(verbose_name="附加类型")
@@ -61,3 +61,9 @@ class AuthMeta(models.Model):
     authAlgs = models.PositiveIntegerField(verbose_name="认证算法")
     miniVer = models.CharField(max_length=5, verbose_name="最小版本")
     maxVer = models.CharField(max_length=5, verbose_name="最大版本")
+
+
+class TrustedApps(models.Model):
+    taid = models.AutoField(primary_key=True)
+    appid = models.URLField(verbose_name="应用编号")
+    facetid = models.CharField(max_length=100, verbose_name="facetId")

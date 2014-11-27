@@ -38,7 +38,7 @@ def generatePolicy(appid):
         policy_scheme = PolicyScheme.objects.filter(pid=p.pid)
         schemes = []
         if policy_scheme:
-            for x in policy_schema:
+            for x in policy_scheme:
                 schemes.append(x.ssid)
         accepte = [{
             "authenticationFactor": p.authFactor,
@@ -107,7 +107,7 @@ def verifyFcParams(fcParams):
     facetID = fcp['facetID']
     tlsData = fcp['tlsData']
 
-    if not verifyChanllenge(chanllenge):
+    if not verifyChanllenge(challenge):
         return False
 
     # TODO:verify appid && facetID
