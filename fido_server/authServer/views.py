@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from authServer.models import UserPub, Policy, PolicyAlgs, PolicyScheme, AuthMeta, AuthAlgorithm, Scheme
 from forms.userForms import LoginForm
 from django.utils.safestring import SafeString
+from django.views.decorators.csrf import csrf_exempt
 
 import time
 
@@ -16,6 +17,7 @@ import json
 from base64 import urlsafe_b64encode
 from os import urandom
 
+import fido_handle
 
 def getMainPage(request):
     fails = False
@@ -112,20 +114,8 @@ def getBindRequest(request):
         },
         "appid" : appid
     }
-    policy = {
-        'accepted' : [[{
-            "authenticationFactor": 0x00000000000001ff,
-            "keyProtection": 0x000000000000000e,
-            "attachment": 0x00000000000000ff,
-            "secureDisplay": 0x000000000000001e,
-            "supportedSchemes": "UAFV1TLV",
-        }]],
-        'disallowed' : {
-            "aaid": "1234#5678"
-        }
-    }
-    random_bytes = urandom(64)
-    chanllenge   = urlsafe_b64encode(random_bytes)
+    policy = fido_handle.generatePolicy(appid)
+    chanllenge   = fido_handle.generateChanllenge()
 
     request = {
         'header' : header,
@@ -147,20 +137,10 @@ def getAuthRequest(request):
         },
         "appid" : appid
     }
-    policy = {
-        'accepted' : [[{
-            "authenticationFactor": 0x00000000000001ff,
-            "keyProtection": 0x000000000000000e,
-            "attachment": 0x00000000000000ff,
-            "secureDisplay": 0x000000000000001e,
-            "supportedSchemes": "UAFV1TLV",
-        }]],
-        'disallowed' : {
-            "aaid": "1234#5678"
-        }
-    }
-    random_bytes = urandom(64)
-    chanllenge   = urlsafe_b64encode(random_bytes)
+    policy = fido_handle.generatePolicy(appid)
+    
+    chanllenge   = fido_handle.generateChanllenge()
+
     transaction = {
         'contentType' : 'text/plain',
         'content' : 'hello world'
@@ -171,6 +151,42 @@ def getAuthRequest(request):
         'policy' : policy,
         'transaction' : transaction
     }
+    return HttpResponse(json.dumps(request))
+
+
+@csrf_exempt
+def postBindResponse(request):
+    if request.method == 'POST':
+        response_str = request.body
+
+        try:
+            response_dict = json.loads(response_str)
+            header = response_dict['header']
+            fcParams = response_dict['fcParams']
+            assertions = response_dict['assertions']
+        except ValueError, e:
+            raise
+        else:
+            pass
+        finally:
+            pass
+
+        op =  fido_handle.verifyHeaders(header)
+        if not op:
+            return HttpResponse('')
+        print fcParams
+        result = fido_handle.verifyFcParams(fcParams)
+
+    else:
+        return HttpResponse('')
+    return HttpResponse('')
+
+@csrf_exempt
+def postAuthResponse(request):
+    if request.method == 'POST':
+        response_str = request.body
+    else:
+        return HttpResponse('')
     return HttpResponse(json.dumps(request))
 
 
