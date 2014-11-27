@@ -45,11 +45,37 @@ def generateChanllenge(length = 64):
     print GLOBAL_CHANLLENGE_SET
     return chanllenge
 
+def verifyChanllenge(chanllenge, need_delete = True):
+    global GLOBAL_CHANLLENGE_SET
+
+    random_bytes = urandom(length)
+    if chanllenge not in GLOBAL_CHANLLENGE_SET:
+        return False
+
+    GLOBAL_CHANLLENGE_SET.remove(chanllenge)
+
+    return True
+
+def base64AddPadding(b64_string):
+    b64_string += "=" * ((4 - len(b64_string) % 4) % 4)
+    return b64_string
+
 GLOBAL_CHANLLENGE_SET = set()
 
 def verifyHeaders(header):
     return True
 
 def verifyFcParams(fcParams):
-    fcp = urlsafe_b64decode(str(fcParams))
-    print fcp
+    print type(fcParams)
+    fcp = urlsafe_b64decode(base64AddPadding(str(fcParams)))
+    appid = fcp['appID']
+    challenge = fcp['challenge']
+    facetID = fcp['facetID']
+    tlsData = fcp['tlsData']
+
+    if not verifyChanllenge(chanllenge):
+        return False
+
+    # TODO:verify appid && facetID
+
+    return True
