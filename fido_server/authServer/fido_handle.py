@@ -67,8 +67,7 @@ def generateChanllenge(length = 64):
 
 def verifyChanllenge(chanllenge, need_delete = True):
     global GLOBAL_CHANLLENGE_SET
-
-    random_bytes = urandom(length)
+    chanllenge = str(chanllenge)
     if chanllenge not in GLOBAL_CHANLLENGE_SET:
         return False
 
@@ -80,7 +79,7 @@ def base64AddPadding(b64_string):
     b64_string += "=" * ((4 - len(b64_string) % 4) % 4)
     return b64_string
 
-GLOBAL_CHANLLENGE_SET = set()
+GLOBAL_CHANLLENGE_SET = set('54698zhfdksjgh876ujhghj7')
 
 def verifyHeaders(header):
     upv = header['upv']
@@ -102,6 +101,7 @@ def verifyHeaders(header):
 def verifyFcParams(fcParams):
     print type(fcParams)
     fcp = urlsafe_b64decode(base64AddPadding(str(fcParams)))
+    fcp = json.loads(fcp)
     appid = fcp['appID']
     challenge = fcp['challenge']
     facetID = fcp['facetID']
@@ -114,4 +114,10 @@ def verifyFcParams(fcParams):
 
     return True
 
+
+def veryfiRegAssertion(assertion):
+    pass
+
+def veryfiAuthAssertion(assertion):
+    pass
 
