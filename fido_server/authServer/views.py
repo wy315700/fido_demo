@@ -101,7 +101,6 @@ def validated(request):
     userpub.save()
     return HttpResponse(upid)
 
-
 def getBindRequest(request):
     username = request.GET['username']
     appid    = request.GET['appid']
@@ -135,6 +134,7 @@ def getBindRequest(request):
         'username' : username
     }
     return HttpResponse(json.dumps(request))
+
 
 def getAuthRequest(request):
     username = request.GET['username']
@@ -172,4 +172,6 @@ def getAuthRequest(request):
         'transaction' : transaction
     }
     return HttpResponse(json.dumps(request))
+
+
 
