@@ -23,7 +23,7 @@ def signatureVerification(publickey, content, signature):
     fullPub = '-----BEGIN PUBLIC KEY-----\n' + publickey.strip() + '\n-----END PUBLIC KEY-----'
     hashContent = MD5.new(content).digest()
     public = RSA.importKey(fullPub)
-    return public.validate(hashContent, signature)
+    return public.verify(hashContent, signature)
 
 
 def generatePolicy(appid):
