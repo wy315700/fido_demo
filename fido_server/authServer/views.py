@@ -174,20 +174,28 @@ def postResponse(request):
         finally:
             pass
 
-        op =  fido_handle.verifyHeaders(header)
+        op = fido_handle.verifyHeaders(header)
         if not op:
             return HttpResponse('')
 
         result = fido_handle.verifyFcParams(fcParams)
         if not result:
             return HttpResponse('')
+
         if op == 'Reg':
-
+            if assertions:
+                for assertion in assertions:
+                    fido_handle.veryfiRegAssertion(assertion)
         elif op == 'Auth':
-
+            if assertions:
+                for assertion in assertions:
+                    fido_handle.veryfiAuthAssertion(assertion)
         else:
             return HttpResponse('')
 
     else:
         return HttpResponse('')
     return HttpResponse('')
+
+
+
