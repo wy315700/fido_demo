@@ -63,7 +63,21 @@ def base64AddPadding(b64_string):
 GLOBAL_CHANLLENGE_SET = set()
 
 def verifyHeaders(header):
-    return True
+    upv = header['upv']
+
+    mj = upv['mj']
+    mn = upv['mn']
+
+    if mj != 1 or mn != 0:
+        return False
+
+    op = header['op']
+
+    if op != 'Reg' and op != 'Auth':
+        return False
+
+    return op
+
 
 def verifyFcParams(fcParams):
     print type(fcParams)
@@ -79,3 +93,5 @@ def verifyFcParams(fcParams):
     # TODO:verify appid && facetID
 
     return True
+
+

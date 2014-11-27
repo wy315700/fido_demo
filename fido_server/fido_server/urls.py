@@ -18,8 +18,7 @@ urlpatterns = patterns('',
     url(r'^others/', 'authServer.views.getAlgsAndScheme'),
     url(r'^bind/request', authServer.views.getBindRequest),
     url(r'^auth/request', authServer.views.getAuthRequest),
-    url(r'^bind/response', authServer.views.postBindResponse),
-    url(r'^auth/response', authServer.views.postAuthResponse),
+    url(r'^response', authServer.views.postResponse),
     url(r'^admin/', include(admin.site.urls)),
     
 )
