@@ -158,7 +158,7 @@ def getAuthRequest(request):
 
 
 @csrf_exempt
-def postBindResponse(request):
+def postResponse(request):
     if request.method == 'POST':
         response_str = request.body
 
@@ -177,20 +177,17 @@ def postBindResponse(request):
         op =  fido_handle.verifyHeaders(header)
         if not op:
             return HttpResponse('')
-        print fcParams
+
         result = fido_handle.verifyFcParams(fcParams)
+        if not result:
+            return HttpResponse('')
+        if op == 'Reg':
+
+        elif op == 'Auth':
+
+        else:
+            return HttpResponse('')
 
     else:
         return HttpResponse('')
     return HttpResponse('')
-
-@csrf_exempt
-def postAuthResponse(request):
-    if request.method == 'POST':
-        response_str = request.body
-    else:
-        return HttpResponse('')
-    return HttpResponse(json.dumps(request))
-
-
-
