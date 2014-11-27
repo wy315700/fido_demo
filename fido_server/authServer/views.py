@@ -91,22 +91,6 @@ def getAlgsAndScheme(request):
         return render(request, 'login.html', locals())
 
 
-def userRegisteration(username, publickey, keyid, extension=None):
-    userpub = UserPub(
-        username=username,
-        publicKey=publickey,
-        keyid=keyid,
-        extension=extension
-    )
-    userpub.save()
-
-
-def signatureVerification(content, signature):
-    fullsignature = '-----BEGIN PUBLIC KEY-----\n' + signature.strip() + '\n-----END PUBLIC KEY-----'
-    hashContent = MD5.new(content).digest()
-    publicKey = RSA.importKey(fullsignature)
-    return publicKey.validate(hashContent, fullsignature)
-
 def userLogout(request):
     logout(request)
     return HttpResponseRedirect('/index/')

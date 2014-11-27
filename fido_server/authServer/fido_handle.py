@@ -1,10 +1,30 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import time
-
+from authServer.models import UserPub, Policy, PolicyAlgs, PolicyScheme
+from Crypto.PublicKey import RSA
+from Crypto.Hash import MD5
 import json
 from base64 import urlsafe_b64encode,urlsafe_b64decode
 from os import urandom
+
+
+def userRegisteration(username, publickey, keyid, extension=None):
+    userpub = UserPub(
+        username=username,
+        publicKey=publickey,
+        keyid=keyid,
+        extension=extension
+    )
+    userpub.save()
+
+
+def signatureVerification(publickey, content, signature):
+    fullPub = '-----BEGIN PUBLIC KEY-----\n' + publickey.strip() + '\n-----END PUBLIC KEY-----'
+    hashContent = MD5.new(content).digest()
+    public = RSA.importKey(fullPub)
+    return public.validate(hashContent, signature)
+
 
 def generatePolicy(appid):
     policies = Policy.objects.filter(appid = appid)
