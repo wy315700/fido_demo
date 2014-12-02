@@ -74,4 +74,3 @@ class authCounter(models.Model):
     aaid = models.CharField(max_length=50, verbose_name="设备号")
     regCounter = models.IntegerField(verbose_name="绑定计数")
     signCounter = models.IntegerField(verbose_name="签名计数")
-    
