@@ -2,6 +2,9 @@ from django.test import TestCase
 
 from authServer.models import TrustedApps
 import struct
+from Crypto.PublicKey import RSA
+from Crypto.Hash import MD5
+from Crypto import Random
 # Create your tests here.
 
 class TrustAppTestCase(TestCase):
@@ -23,11 +26,17 @@ class TrustAppTestCase(TestCase):
 
 
 def getKrd():
+    rng = Random.new().read
+    privateKey = RSA.generate(1024, rng)
+    publicKey = privateKey.publickey()
+    priv_str = privateKey.exportKey()
+    pub_str = publicKey.exportKey()
+    print pub_str.replace('\n', '').split('-----')[2]
     db_aaid = "testAAID"
     db_finalchallenge = "testFinalChallenge"
     db_keyId = "testKeyID"
-    db_publicKey = "testPublicKey"
-    db_signature = "testSignature"
+    db_publicKey = pub_str.replace('\n', '').split('-----')[2]
+    db_signature = ""
     tag_krd = '\x00\x03'
     Length = '\x00\x00'
     aaid = struct.pack(str(len(db_aaid)) + "s", db_aaid)
@@ -49,11 +58,17 @@ def getKrd():
                   RegCounter + SignCounter + final_publicKey
     temp_krd = tag_krd + Length + krd_content
     real_length = struct.pack("H", len(temp_krd))
+    plaintext = tag_krd + real_length + krd_content
+    hash = MD5.new(plaintext).digest()
+    db_signature = str(privateKey.sign(hash,rng)[0])
     signature = struct.pack(str(len(db_signature)) + "s", db_signature)
     final_signature = struct.pack("H", len(signature)) + signature
-    real_krd = tag_krd + real_length + krd_content + tag_signature + final_signature
-    print repr(real_krd)
-
+    real_krd = plaintext + tag_signature + final_signature
+    tag_res = "\x00\x01"
+    temp_res = tag_res + Length + real_krd
+    res_length = struct.pack("H", len(temp_res))
+    real_res = tag_res + res_length + real_krd
+    print repr(real_res)
 
 
 
