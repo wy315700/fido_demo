@@ -37,13 +37,13 @@ def getKrd():
     db_keyId = "testKeyID"
     db_publicKey = pub_str.replace('\n', '').split('-----')[2]
     db_signature = ""
-    tag_krd = '\x00\x03'
+    tag_krd = '\x03\x00'
     Length = '\x00\x00'
     aaid = struct.pack(str(len(db_aaid)) + "s", db_aaid)
     final_aaid = struct.pack('H', len(aaid)) + aaid
     authenticatorVersion = struct.pack("3s", "1.0")
-    publicKeyAlgAndEncoding = '\x00\x01'
-    SignatureAlgAndEndcoding = '\x01\x00'
+    publicKeyAlgAndEncoding = '\x01\x00'
+    SignatureAlgAndEndcoding = '\x00\x01'
     FinalChallenge = struct.pack(str(len(db_finalchallenge)) + "s", db_finalchallenge)
     final_FinalChallenge = struct.pack("H", len(FinalChallenge)) + FinalChallenge
     KeyId = struct.pack(str(len(db_keyId)) + "s", db_keyId)
@@ -52,7 +52,7 @@ def getKrd():
     SignCounter = struct.pack("I", 0)
     PublicKey = struct.pack(str(len(db_publicKey)) + "s", db_publicKey)
     final_publicKey = struct.pack("H", len(PublicKey)) + PublicKey
-    tag_signature = "\x00\x06"
+    tag_signature = "\x06\x00"
     krd_content = final_aaid + authenticatorVersion + publicKeyAlgAndEncoding + \
                   SignatureAlgAndEndcoding + final_FinalChallenge + final_keyId + \
                   RegCounter + SignCounter + final_publicKey
@@ -64,7 +64,7 @@ def getKrd():
     signature = struct.pack(str(len(db_signature)) + "s", db_signature)
     final_signature = struct.pack("H", len(signature)) + signature
     real_krd = plaintext + tag_signature + final_signature
-    tag_res = "\x00\x01"
+    tag_res = "\x01\x00"
     temp_res = tag_res + Length + real_krd
     res_length = struct.pack("H", len(temp_res))
     real_res = tag_res + res_length + real_krd
