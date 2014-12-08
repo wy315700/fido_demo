@@ -185,11 +185,11 @@ def postResponse(request):
         if op == 'Reg':
             if assertions:
                 for assertion in assertions:
-                    fido_handle.veryfiRegAssertion(assertion)
+                    fido_handle.veryfiRegAssertion(assertion, fcParams)
         elif op == 'Auth':
             if assertions:
                 for assertion in assertions:
-                    fido_handle.veryfiAuthAssertion(assertion)
+                    fido_handle.veryfiAuthAssertion(assertion, fcParams)
         else:
             return HttpResponse('')
 

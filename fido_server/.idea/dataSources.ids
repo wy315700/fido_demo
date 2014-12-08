@@ -12,6 +12,13 @@
       <column name="authalgs" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="alid"/>
     </table>
+    <table name="authServer_authcounter" schema="" catalog="auth_server" type="TABLE">
+      <column name="acid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="aaid" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="regCounter" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="signCounter" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="acid"/>
+    </table>
     <table name="authServer_authmeta" schema="" catalog="auth_server" type="TABLE">
       <column name="amid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="aaid" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
@@ -37,7 +44,7 @@
       <column name="keyPro" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="attachment" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="securDis" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="appid" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="appid" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
       <column name="allowed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="pid"/>
     </table>
@@ -57,6 +64,12 @@
       <column name="ssid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="supportedScheme" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="ssid"/>
+    </table>
+    <table name="authServer_trustedapps" schema="" catalog="auth_server" type="TABLE">
+      <column name="taid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="appid" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="facetid" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="taid"/>
     </table>
     <table name="authServer_userpub" schema="" catalog="auth_server" type="TABLE">
       <column name="upid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
