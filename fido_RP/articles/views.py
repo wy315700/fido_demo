@@ -1,6 +1,7 @@
 #!/usr/bin/python  
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse 
@@ -250,17 +251,28 @@ def getTrustedApps(request):
     }
     return HttpResponse(json.dumps(TrustedApps), content_type = "vnd.fi- do.trusted-apps+json")
 
+@csrf_exempt
 def bindUsers(request):
-    payload = {
-        'username' : request.user.username,
-        'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
-    }
-    r = requests.get("http://fido_server_url", params=payload)
-    return HttpResponse(r.text)
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username = username, password = password)
+        if user is not None:
+            login(request, user)
+
+            payload = {
+                'username' : user.username,
+                'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
+            }
+            r = requests.get("http://127.0.0.1:8080/bind/request", params=payload)
+            return HttpResponse(r.text)
+    
+    return HttpResponse('Unauthorized', status=403)
+
 
 def getAuthenticated(request):
     payload = {
         'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
     }
-    r = requests.get("http://fido_server_url", params=payload)
+    r = requests.get("http://127.0.0.1:8080/auth/request", params=payload)
     return HttpResponse(r.text)

@@ -52,7 +52,7 @@ def generatePolicy(appid):
     }
     return policy
 
-def generateChallenge(length = 64):
+def generateChanllenge(length = 64):
     global GLOBAL_CHALLENGE_SET
     random_bytes = urandom(length)
     challenge   = urlsafe_b64encode(random_bytes)

@@ -64,7 +64,7 @@ DATABASES = {
         'NAME': 'auth_server',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '192.168.110.232',
+        'HOST': '192.168.110.83',
         'PORT': 3306,
     }
 }

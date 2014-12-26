@@ -130,7 +130,6 @@ def getBindRequest(request):
 
 
 def getAuthRequest(request):
-    username = request.GET['username']
     appid    = request.GET['appid']
     header = {
         "op" : "Auth",

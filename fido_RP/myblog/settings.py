@@ -63,7 +63,7 @@ DATABASES = {
         'NAME': 'fido',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '192.168.110.232',
+        'HOST': '192.168.110.83',
         'PORT': 3306,
     }
 }
