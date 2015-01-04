@@ -262,7 +262,7 @@ def bindUsers(request):
 
             payload = {
                 'username' : user.username,
-                'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
+                'appid'    : request.scheme + '://' + request.get_host() + '/trustedapps'
             }
             r = requests.get("http://127.0.0.1:8080/bind/request", params=payload)
             return HttpResponse(r.text)

@@ -22,6 +22,7 @@ def signatureVerification(publickey, content, signature):
 
 
 def generatePolicy(appid):
+    print appid
     policies = Policy.objects.filter(appid = appid)
     accepted_list = []
     for p in policies:
@@ -36,19 +37,20 @@ def generatePolicy(appid):
             for x in policy_scheme:
                 schemes.append(x.ssid)
         accepte = [{
+            "aaid": p.aaid,
             "authenticationFactor": p.authFactor,
             "keyProtection": p.keyPro,
             "attachment": p.attachment,
-            "secureDisplay": p.secureDisplay,
+            "secureDisplay": p.securDis,
             "supportedAuthAlgs" :algs,
             "supportedSchemes": schemes,
         }]
         accepted_list.append(accepte)
     policy = {
         'accepted' : accepted_list,
-        'disallowed' : {
+        'disallowed' : [{
             "aaid": "1234#5678"
-        }
+        }]
     }
     return policy
 
