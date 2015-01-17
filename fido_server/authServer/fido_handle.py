@@ -54,7 +54,7 @@ def generatePolicy(appid):
     }
     return policy
 
-def generateChanllenge(length = 64):
+def generateChallenge(length = 64):
     global GLOBAL_CHALLENGE_SET
     random_bytes = urandom(length)
     challenge   = urlsafe_b64encode(random_bytes)
@@ -177,11 +177,11 @@ def veryfiRegAssertion(assertion, fcParams):
     response['krd']['signature_alg_and_encoding'], = struct.unpack('H', krd_tmp_krd[:2])
     krd_tmp_krd = krd_tmp_krd[2:]
     # 1.2.7
-    final_chanllenge_size, = struct.unpack('H', krd_tmp_krd[:2])
+    final_challenge_size, = struct.unpack('H', krd_tmp_krd[:2])
     krd_tmp_krd = krd_tmp_krd[2:]
     # 1.2.8
-    response['krd']['final_chanllenge'] = krd_tmp_krd[:final_chanllenge_size]
-    krd_tmp_krd = krd_tmp_krd[final_chanllenge_size:]
+    response['krd']['final_challenge'] = krd_tmp_krd[:final_challenge_size]
+    krd_tmp_krd = krd_tmp_krd[final_challenge_size:]
     # 1.2.9
     keyid_size, = struct.unpack('H', krd_tmp_krd[:2])
     krd_tmp_krd = krd_tmp_krd[2:]
@@ -254,11 +254,11 @@ def veryfiAuthAssertion(assertion, fcParams):
     response['krd']['authnr_nonce'] = signed_data_tmp_signed_data[:authnr_nonce_size]
     signed_data_tmp_signed_data = signed_data_tmp_signed_data[authnr_nonce_size:]
     # 1.2.7
-    final_chanllenge_size = struct.unpack('H', signed_data_tmp_signed_data)
+    final_challenge_size = struct.unpack('H', signed_data_tmp_signed_data)
     signed_data_tmp_signed_data = signed_data_tmp_signed_data[2:]
     # 1.2.8
-    response['krd']['final_chanllenge'] = signed_data_tmp_signed_data[:final_chanllenge_size]
-    signed_data_tmp_signed_data = signed_data_tmp_signed_data[final_chanllenge_size:]
+    response['krd']['final_challenge'] = signed_data_tmp_signed_data[:final_challenge_size]
+    signed_data_tmp_signed_data = signed_data_tmp_signed_data[final_challenge_size:]
     # 1.2.9
     tchash_size = struct.unpack('H', signed_data_tmp_signed_data)
     signed_data_tmp_signed_data = signed_data_tmp_signed_data[2:]

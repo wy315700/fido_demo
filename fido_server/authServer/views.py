@@ -118,11 +118,11 @@ def getBindRequest(request):
         "appid" : appid
     }
     policy = fido_handle.generatePolicy(appid)
-    chanllenge   = fido_handle.generateChanllenge()
+    challenge   = fido_handle.generateChallenge()
 
     request = {
         'header' : header,
-        'chanllenge' : chanllenge,
+        'challenge' : challenge,
         'policy' : policy,
         'username' : username
     }
@@ -141,7 +141,7 @@ def getAuthRequest(request):
     }
     policy = fido_handle.generatePolicy(appid)
     
-    chanllenge   = fido_handle.generateChanllenge()
+    challenge   = fido_handle.generateChallenge()
 
     transaction = {
         'contentType' : 'text/plain',
@@ -149,7 +149,7 @@ def getAuthRequest(request):
     }
     request = {
         'header' : header,
-        'chanllenge' : chanllenge,
+        'challenge' : challenge,
         'policy' : policy,
         'transaction' : transaction
     }
