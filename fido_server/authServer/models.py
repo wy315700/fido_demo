@@ -6,8 +6,11 @@ from django.db import models
 class UserPub(models.Model):
     upid = models.AutoField(primary_key=True)
     username = models.CharField(max_length=30, verbose_name="用户名")
+    aaid = models.CharField(max_length=50,default=None, verbose_name="设备号")
     publicKey = models.TextField(verbose_name="用户公钥")
     keyid = models.CharField(max_length=100, verbose_name="keyID")
+    regCounter = models.IntegerField(default = 0,verbose_name="绑定计数")
+    signCounter = models.IntegerField(default = 0,verbose_name="签名计数")
     isValidate = models.NullBooleanField(verbose_name="是否有效")
     extension = models.CharField(max_length=100)
 

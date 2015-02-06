@@ -269,10 +269,19 @@ def bindUsers(request):
     
     return HttpResponse('Unauthorized', status=403)
 
+@csrf_exempt
+def uploadResponse(request):
+    if request.method == "POST":
+        response = request.body
+        r = requests.post("http://127.0.0.1:8080/response", data=response)
+        return HttpResponse(r.text)
+    
+    return HttpResponse('Unauthorized', status=403)
+
 
 def getAuthenticated(request):
     payload = {
-        'appid'    : request.scheme + '://' + request.get_host() + 'trustedapps'
+        'appid'    : request.scheme + '://' + request.get_host() + '/trustedapps'
     }
     r = requests.get("http://127.0.0.1:8080/auth/request", params=payload)
     return HttpResponse(r.text)

@@ -22,5 +22,6 @@ urlpatterns = patterns('',
     url(r'^trustedapps', 'articles.views.getTrustedApps'),
     url(r'^bind', 'articles.views.bindUsers'),
     url(r'^authenticate', 'articles.views.getAuthenticated'),
+    url(r'^response', 'articles.views.uploadResponse'),
     url(r'^admin/', include(admin.site.urls)),
 )

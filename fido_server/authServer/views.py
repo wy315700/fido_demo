@@ -118,7 +118,7 @@ def getBindRequest(request):
         "appid" : appid
     }
     policy = fido_handle.generatePolicy(appid)
-    challenge   = fido_handle.generateChallenge()
+    challenge   = fido_handle.generateChallenge(username=username)
 
     request = {
         'header' : header,
@@ -160,7 +160,7 @@ def getAuthRequest(request):
 def postResponse(request):
     if request.method == 'POST':
         response_str = request.body
-
+        print response_str
         try:
             response_dict = json.loads(response_str)
             header = response_dict['header']
@@ -177,20 +177,24 @@ def postResponse(request):
         if not op:
             return HttpResponse('')
 
-        result = fido_handle.verifyFcParams(fcParams)
-        if not result:
+        username = fido_handle.verifyFcParams(fcParams)
+        if not username:
             return HttpResponse('')
 
+        result = False
         if op == 'Reg':
             if assertions:
                 for assertion in assertions:
-                    fido_handle.veryfiRegAssertion(assertion, fcParams)
+                    result = fido_handle.veryfiRegAssertion(assertion, fcParams)
         elif op == 'Auth':
             if assertions:
                 for assertion in assertions:
-                    fido_handle.veryfiAuthAssertion(assertion, fcParams)
+                    result = fido_handle.veryfiAuthAssertion(assertion, fcParams)
         else:
             return HttpResponse('')
+
+        if result:
+            return HttpResponse(result)
 
     else:
         return HttpResponse('')
