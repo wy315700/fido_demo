@@ -27,16 +27,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">fido测试RP</a>
+          <a class="navbar-brand" href="#">Web服务子系统</a>
           {% block left-header %}
 		  <ul class="nav navbar-nav">
-            <li class="active"><a href="/index/">Home</a></li>
+            <li class="active"><a href="/index/">主页</a></li>
             {% if request.user.id %}
             <li class="inactive"><a href="/userinfo/?userId={{ request.user.id }}">UserInfo</a></li>
-            <li class="inactive"><a href="/bind">绑定</a></li>
+            <!-- <li class="inactive"><a href="/bind">绑定</a></li> -->
             {% endif %}
-            <li class="inactive"><a href="/authenticate">认证</a></li>
-            <li class="inactive"><a href="/facetid/">FacetIDs</a></li>
+            <!-- <li class="inactive"><a href="/authenticate">认证</a></li> -->
+            <li class="inactive"><a href="/facetid/">应用</a></li>
           </ul>
         {% endblock %}
         </div><!--/.navbar-header -->
